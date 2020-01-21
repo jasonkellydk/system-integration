@@ -1,0 +1,12 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+#.env hehe let me help my fellow students, it can be complicated with all the secrets...
+#.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log

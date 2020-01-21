@@ -1,0 +1,87 @@
+version: '3'
+services:
+  # Reverse proxy service
+  traefik:
+    image: traefik
+    command: -c /dev/null --web --docker --logLevel=INFO
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - traefik.backend=traefik
+      - traefik.frontend.rule=Host:traefik.docker
+      - traefik.port=8080
+
+  # App service
+  web:
+    build:
+      context: ./packages/web
+      dockerfile: Dockerfile
+    volumes:
+      - ./packages/web:/var/www/html
+    ports:
+      - 3000:3000
+    labels:
+      - traefik.backend=web
+      - traefik.frontend.rule=Host:web.docker
+      - traefik.port=3000
+
+  # Balance service
+  balance:
+    build:
+      context: ./packages/balance
+      dockerfile: Dockerfile
+    volumes:
+      - ./packages/balance:/var/www/html
+    environment:
+      CONTAINER_ROLE: local
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_DATABASE: eval
+      DB_USERNAME: user
+      DB_PASSWORD: example
+      DB_PORT: 5432
+      REDIS_HOST: cache
+    depends_on:
+      - postgres
+      - cache
+    ports:
+      - 9050:9000
+    labels:
+      - traefik.backend=balance
+      - traefik.frontend.rule=Host:balance.docker
+      - traefik.port=9000
+
+  # Taxes services
+  taxes:
+    build:
+      context: ./packages/taxes
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    labels:
+      - traefik.backend=taxes
+      - traefik.frontend.rule=Host:taxes.docker
+      - traefik.port=4000
+
+  # Postgres service
+  postgres:
+    image: postgres:9.6-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_DB=eval
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=example
+    ports:
+      - 5432:5432
+
+  # redis cache
+  cache:
+    image: redis:4.0.11
+    ports:
+      - 6379:6379
+
+volumes:
+  db-data: {}

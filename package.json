@@ -1,0 +1,20 @@
+{
+  "name": "system-integration",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "**/packages"
+  ],
+  "nohoist": [
+    "app/**",
+    "web/**",
+    "proxy/**"
+  ],
+  "scripts": {
+    "setup:mac": "sudo ./scripts/setup-mac.sh",
+    "start:app": "cd ./packages/app && react-native run-ios"
+  },
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  }
+}

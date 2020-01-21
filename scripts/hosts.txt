@@ -1,0 +1,7 @@
+## Added by system-integration ##
+127.0.0.1   web.docker
+127.0.0.1   traefik.docker
+127.0.0.1   balance.docker
+127.0.0.1.  proxy.docker
+127.0.0.1.  taxes.docker
+## Added by system-integration ##
