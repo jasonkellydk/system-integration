@@ -10,8 +10,16 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "fast-xml-parser": "^3.16.0",
+    "he": "^1.2.0",
+    "jwt-decode": "^2.2.0",
     "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.61.5",
+    "react-native-webview": "^8.0.4",
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.23",
+    "xml2json": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
