@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "fast-xml-parser": "^3.16.0",
     "he": "^1.2.0",
     "jwt-decode": "^2.2.0",
